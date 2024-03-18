@@ -8,35 +8,40 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var locationManager = LocationManager()
     @State private var isNight = false
     
+    
+    @State var weather: ResponseBody?
+    
     var body: some View {
-        ZStack {
-            BackgroundView(isNight: isNight)
-            VStack{
-                CityTextView(cityName: "California, LA")
-                
-                MainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill",
-                                      temperature: 22)
-                
-                HStack(spacing: 20){
-                    WeatherDayView(dayOfWeek: "Tue", imageName: "cloud.sun.fill", temperature: 18)
-                    WeatherDayView(dayOfWeek: "Wed", imageName: "sun.max.fill", temperature: 24)
-                    WeatherDayView(dayOfWeek: "Thu", imageName: "snow", temperature: 14)
-                    WeatherDayView(dayOfWeek: "FiI", imageName: "wind.snow", temperature: 24)
-                    WeatherDayView(dayOfWeek: "Sat", imageName: "sunset.fill", temperature: 12)
+        let weatherManager = WeatherManager(isNight: $isNight)
+        
+        VStack {
+            if let location = locationManager.location {
+                if let weather = weather {
+                    WeatherView(weather: weather, isNight: $isNight)
+                    
+                    
+                } else {
+                    LoadingView()
+                        .task{
+                            do{
+                                weather = try await weatherManager.getCurrentWeather(latitude: location.latitude, longtitude: location.longitude)
+                            } catch{
+                                print("Error getting weather", error)
+                            }
+                        }
                 }
-                Spacer()
-                
-                Button{
-                    isNight.toggle()
-                } label: {
-                    WeatherButtonView(title: "Change day time",
-                                      bgColor: .white,
-                                      fgColor: .blue)
+            } else {
+                if(locationManager.isLoading){
+                    LoadingView()
+                } else {
+                    WelcomeView()
+                        .environmentObject(locationManager)
                 }
-                Spacer()
             }
+            
         }
     }
 }
@@ -48,24 +53,27 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct WeatherDayView: View {
-    var dayOfWeek: String
+    var parameter: String
     var imageName: String
-    var temperature: Int
+    var value: String
     
     var body: some View {
         VStack{
-            Text(dayOfWeek)
-                .font(.system(size: 22, weight: .medium, design: .default))
+            Text(parameter)
+                .font(.system(size: 16, weight: .medium, design: .default))
                 .foregroundColor(.white)
             
             Image(systemName: imageName)
                 .renderingMode(.original)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .foregroundColor(.white)
                 .frame(width: 40, height: 40)
+               
+
             
-            Text("\(temperature)°")
-                .font(.system(size: 30, weight: .medium))
+            Text(value)
+                .font(.system(size: 22, weight: .medium))
                 .foregroundColor(.white)
         }
     }
