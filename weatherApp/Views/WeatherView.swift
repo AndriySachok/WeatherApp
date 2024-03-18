@@ -20,8 +20,20 @@ struct WeatherView: View {
                     .fontWeight(.light)
                     .foregroundColor(.white)
                 
-                MainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill",
-                                      temperature: Int(weather.main.temp))
+                
+                if weather.weather.first(where: { $0.main == "Clouds" }) != nil {
+                    MainWeatherStatusView(imageName: isNight ? "cloud.moon" : "cloud.sun.fill",
+                                          temperature: Int(weather.main.temp))
+                } else if weather.weather.first(where: { $0.main == "Rain" }) != nil{
+                    MainWeatherStatusView(imageName: isNight ? "cloud.moon.rain" : "cloud.sun.rain",
+                                          temperature: Int(weather.main.temp))
+                } else if weather.weather.first(where: { $0.main == "Snow" }) != nil{
+                    MainWeatherStatusView(imageName: isNight ? "cloud.snow.fill" : "cloud.snow",
+                                          temperature: Int(weather.main.temp))
+                } else {
+                    MainWeatherStatusView(imageName: isNight ? "moon.stars" : "sun.max",
+                                          temperature: Int(weather.main.temp))
+                }
                 
                 HStack(spacing: 20){
                     WeatherDayView(parameter: "Feels like", imageName: "thermometer.medium", value: weather.main.feelsLike.roundDouble() + "°" )

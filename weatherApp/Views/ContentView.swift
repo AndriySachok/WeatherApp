@@ -112,6 +112,7 @@ struct MainWeatherStatusView: View {
                 .renderingMode(.original)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .foregroundColor(.white)
                 .frame(width: 180, height: 180)
             
             Text("\(temperature)°")
