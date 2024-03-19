@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7016ACB2BA9ACD300658DBA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B7016ACA2BA9ACD300658DBA /* Lottie */; };
+		B7016ACE2BAA070400658DBA /* AnimatedLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7016ACD2BAA070400658DBA /* AnimatedLoadView.swift */; };
+		B7016AD22BAA16BB00658DBA /* paper_plane_around_globe.json in Resources */ = {isa = PBXBuildFile; fileRef = B7016ACF2BAA16BB00658DBA /* paper_plane_around_globe.json */; };
+		B7016AD32BAA16BB00658DBA /* colorful_minimalistic.json in Resources */ = {isa = PBXBuildFile; fileRef = B7016AD02BAA16BB00658DBA /* colorful_minimalistic.json */; };
+		B7016AD42BAA16BB00658DBA /* minimalistic.json in Resources */ = {isa = PBXBuildFile; fileRef = B7016AD12BAA16BB00658DBA /* minimalistic.json */; };
 		B7FFEAAA2BA764040034CFAC /* weatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFEAA92BA764040034CFAC /* weatherAppApp.swift */; };
 		B7FFEAAC2BA764040034CFAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFEAAB2BA764040034CFAC /* ContentView.swift */; };
 		B7FFEAAE2BA764050034CFAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7FFEAAD2BA764050034CFAC /* Assets.xcassets */; };
@@ -23,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B7016ACD2BAA070400658DBA /* AnimatedLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLoadView.swift; sourceTree = "<group>"; };
+		B7016ACF2BAA16BB00658DBA /* paper_plane_around_globe.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paper_plane_around_globe.json; sourceTree = "<group>"; };
+		B7016AD02BAA16BB00658DBA /* colorful_minimalistic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = colorful_minimalistic.json; sourceTree = "<group>"; };
+		B7016AD12BAA16BB00658DBA /* minimalistic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = minimalistic.json; sourceTree = "<group>"; };
 		B7FFEAA62BA764040034CFAC /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7FFEAA92BA764040034CFAC /* weatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weatherAppApp.swift; sourceTree = "<group>"; };
 		B7FFEAAB2BA764040034CFAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,12 +53,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7016ACB2BA9ACD300658DBA /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7016ACC2BA9AD0400658DBA /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				B7016AD02BAA16BB00658DBA /* colorful_minimalistic.json */,
+				B7016AD12BAA16BB00658DBA /* minimalistic.json */,
+				B7016ACF2BAA16BB00658DBA /* paper_plane_around_globe.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		B7FFEA9D2BA764040034CFAC = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +89,7 @@
 		B7FFEAA82BA764040034CFAC /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B7016ACC2BA9AD0400658DBA /* Animations */,
 				B7FFEABB2BA832D70034CFAC /* Models */,
 				B7FFEABA2BA832C50034CFAC /* Managers */,
 				B7FFEAB92BA8329C0034CFAC /* Views */,
@@ -98,6 +119,7 @@
 				B7FFEABE2BA847120034CFAC /* WelcomeView.swift */,
 				B7FFEAC02BA84CD00034CFAC /* LoadingView.swift */,
 				B7FFEACB2BA880CE0034CFAC /* WeatherView.swift */,
+				B7016ACD2BAA070400658DBA /* AnimatedLoadView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -134,6 +156,9 @@
 			dependencies = (
 			);
 			name = weatherApp;
+			packageProductDependencies = (
+				B7016ACA2BA9ACD300658DBA /* Lottie */,
+			);
 			productName = weatherApp;
 			productReference = B7FFEAA62BA764040034CFAC /* weatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -162,6 +187,9 @@
 				Base,
 			);
 			mainGroup = B7FFEA9D2BA764040034CFAC;
+			packageReferences = (
+				B7016AC92BA9ACD300658DBA /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = B7FFEAA72BA764040034CFAC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,9 +204,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7016AD22BAA16BB00658DBA /* paper_plane_around_globe.json in Resources */,
 				B7FFEAB12BA764050034CFAC /* Preview Assets.xcassets in Resources */,
 				B7FFEACA2BA8801C0034CFAC /* weatherData.json in Resources */,
 				B7FFEAAE2BA764050034CFAC /* Assets.xcassets in Resources */,
+				B7016AD42BAA16BB00658DBA /* minimalistic.json in Resources */,
+				B7016AD32BAA16BB00658DBA /* colorful_minimalistic.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +227,7 @@
 				B7FFEAAA2BA764040034CFAC /* weatherAppApp.swift in Sources */,
 				B7FFEACE2BA8877D0034CFAC /* Extensions.swift in Sources */,
 				B7FFEAC82BA87FD00034CFAC /* ModelData.swift in Sources */,
+				B7016ACE2BAA070400658DBA /* AnimatedLoadView.swift in Sources */,
 				B7FFEACC2BA880CE0034CFAC /* WeatherView.swift in Sources */,
 				B7FFEAB82BA78AF10034CFAC /* WeatherButton.swift in Sources */,
 				B7FFEAC12BA84CD00034CFAC /* LoadingView.swift in Sources */,
@@ -401,6 +433,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7016AC92BA9ACD300658DBA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7016ACA2BA9ACD300658DBA /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7016AC92BA9ACD300658DBA /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B7FFEA9E2BA764040034CFAC /* Project object */;
 }

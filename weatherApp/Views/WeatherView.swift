@@ -50,6 +50,7 @@ struct WeatherView: View {
                                       bgColor: .white,
                                       fgColor: .blue)
                 }
+                
                 Spacer()
             }
         }

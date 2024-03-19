@@ -6,22 +6,24 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct ContentView: View {
     @StateObject var locationManager = LocationManager()
     @State private var isNight = false
-    
-    
     @State var weather: ResponseBody?
+    @State private var isDragging = false
+    
     
     var body: some View {
         let weatherManager = WeatherManager(isNight: $isNight)
         
         VStack {
+            if(isDragging){ AnimatedLoadView(animationName: "paper_plane_around_globe", loopMode: .loop) }
+            
             if let location = locationManager.location {
                 if let weather = weather {
                     WeatherView(weather: weather, isNight: $isNight)
-                    
                     
                 } else {
                     LoadingView()
@@ -43,6 +45,32 @@ struct ContentView: View {
             }
             
         }
+        .gesture(
+            DragGesture()
+                .onChanged({ _ in
+                    isDragging = true
+                })
+                .onEnded { _ in
+                    Task {
+                        do {
+                            guard let location = locationManager.location else {
+                                print("Location not available")
+                                return
+                            }
+                            //redefine weatherManager((
+                            let weatherManager = WeatherManager(isNight: $isNight)
+                            // Call the asynchronous function and await its result
+                            let currentWeather = try await weatherManager.getCurrentWeather(latitude: location.latitude, longtitude: location.longitude)
+                            // Update the weather property with the obtained response
+                            weather = currentWeather
+                            //change the state to disable animation
+                            isDragging.toggle()
+                        } catch {
+                            print("Error fetching weather data: \(error)")
+                        }
+                    }
+                }
+        )
     }
 }
 
