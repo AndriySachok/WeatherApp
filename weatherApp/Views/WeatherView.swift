@@ -16,7 +16,14 @@ struct WeatherView: View {
             BackgroundView(isNight: isNight)
             VStack{
                 CityTextView(cityName: weather.name + ", " + weather.sys.country)
-                Text("Today, \(Date().formatted(.dateTime.month().day().hour().minute()))")
+                let dateFormatter: DateFormatter = {
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en_US")
+                    formatter.setLocalizedDateFormatFromTemplate("MMMM d, h:mm a")
+                    return formatter
+                }()
+
+                Text("Today, \(dateFormatter.string(from: Date()))")
                     .fontWeight(.light)
                     .foregroundColor(.white)
                 
