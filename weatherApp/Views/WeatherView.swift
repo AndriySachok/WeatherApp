@@ -8,39 +8,32 @@
 import SwiftUI
 
 struct WeatherView: View {
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
     var weather: ResponseBody
-    @Binding var isNight: Bool
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.setLocalizedDateFormatFromTemplate("MMMM d, h:mm a")
+        return formatter
+    }()
     
     var body: some View {
         ZStack {
-            BackgroundView(isNight: isNight)
-            VStack{
-                CityTextView(cityName: weather.name + ", " + weather.sys.country)
-                let dateFormatter: DateFormatter = {
-                    let formatter = DateFormatter()
-                    formatter.locale = Locale(identifier: "en_US")
-                    formatter.setLocalizedDateFormatFromTemplate("MMMM d, h:mm a")
-                    return formatter
-                }()
+            BackgroundView(isNight: weatherViewModel.isNight)
+            VStack {
+                Text(weather.name + ", " + weather.sys.country)
+                    .font(.system(size: 32, weight: .medium, design: .default))
+                    .foregroundColor(.white)
+                    .padding()
 
-                Text("Today, \(dateFormatter.string(from: Date()))")
+                Text("Today, \(dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(weather.dt))))")
                     .fontWeight(.light)
                     .foregroundColor(.white)
                 
                 
-                if weather.weather.first(where: { $0.main == "Clouds" }) != nil {
-                    MainWeatherStatusView(imageName: isNight ? "cloud.moon" : "cloud.sun.fill",
-                                          temperature: Int(weather.main.temp))
-                } else if weather.weather.first(where: { $0.main == "Rain" }) != nil{
-                    MainWeatherStatusView(imageName: isNight ? "cloud.moon.rain" : "cloud.sun.rain",
-                                          temperature: Int(weather.main.temp))
-                } else if weather.weather.first(where: { $0.main == "Snow" }) != nil{
-                    MainWeatherStatusView(imageName: isNight ? "cloud.snow.fill" : "cloud.snow",
-                                          temperature: Int(weather.main.temp))
-                } else {
-                    MainWeatherStatusView(imageName: isNight ? "moon.stars" : "sun.max",
-                                          temperature: Int(weather.main.temp))
-                }
+                MainWeatherStatusView(imageName: imageSelector(),
+                                      temperature: Int(weather.main.temp))
                 
                 HStack(spacing: 20){
                     WeatherDayView(parameter: "Feels like", imageName: "thermometer.medium", value: weather.main.feelsLike.roundDouble() + "°" )
@@ -51,7 +44,7 @@ struct WeatherView: View {
                 Spacer()
                 
                 Button{
-                    isNight.toggle()
+                    weatherViewModel.isNight.toggle()
                 } label: {
                     WeatherButtonView(title: "Change day time",
                                       bgColor: .white,
@@ -62,10 +55,22 @@ struct WeatherView: View {
             }
         }
     }
+    private func imageSelector() -> String {
+        switch weather.weather.first?.main {
+        case "Clouds":
+            return weatherViewModel.isNight ? "cloud.moon" : "cloud.sun.fill"
+        case "Rain":
+            return weatherViewModel.isNight ? "cloud.moon.rain" : "cloud.sun.rain"
+        case "Snow":
+            return weatherViewModel.isNight ? "cloud.snow.fill" : "cloud.snow"
+        default:
+            return weatherViewModel.isNight ? "moon.stars" : "sun.max"
+        }
+    }
 }
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView(weather: previewWeather, isNight: Binding.constant(false))
+        WeatherView(weather: previewWeather)
     }
 }
